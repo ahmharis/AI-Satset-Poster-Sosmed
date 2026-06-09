@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // Hanya izinkan metode GET
   if (req.method !== 'GET') {
     return res.status(405).json({ success: false, message: 'Metode tidak diizinkan.' });
   }
@@ -8,11 +7,10 @@ export default async function handler(req, res) {
   const GAS_URL = process.env.GOOGLE_APPS_SCRIPT_URL;
 
   if (!GAS_URL) {
-    return res.status(500).json({ success: false, message: 'Sistem Error: URL GAS belum disetel di Vercel.' });
+    return res.status(500).json({ success: false, message: 'Sistem Error: Variabel GOOGLE_APPS_SCRIPT_URL belum disetel di Vercel.' });
   }
 
   try {
-    // Menghubungkan ke fungsi doGet di Apps Script
     const targetUrl = `${GAS_URL}?action=login&email=${encodeURIComponent(email)}&deviceId=${encodeURIComponent(deviceId)}`;
     const response = await fetch(targetUrl);
     
